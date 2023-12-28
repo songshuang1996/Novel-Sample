@@ -7,6 +7,16 @@ rm(list=ls())
 motiftogether=c()
 organs=list.files()
 
+if ('meme.txt' %in% organs) {
+  print('here')
+  motif=read_meme('meme.txt')
+  logplot<-view_motifs(motif)
+  ggsave('novel_motif.png',plot=logplot,width = 50, height = length(motif)*8, units = "cm",device = 'png',limitsize = FALSE)
+  logplot
+  stop()
+}
+
+
 for (organ in organs) {
   #read in all meme results
 
@@ -46,28 +56,33 @@ if (length(motiftogether1)>1){
     protein_id_all=str_replace_all(string = motif_name,pattern = "-\\d-\\d",replacement = "")
     occur_times=str_count(motif_name,'/')[1]+1
     split_data=str_split(protein_id_all,'/|-')
-    
+    #print(split_data)
+    #print(length(split_data))
     motiftogether2[[count_motif]]['name']=sprintf('Motif %d - Frequency of occurrence:%d',count_motif,occur_times)
     #how many time does a gene in combinations
-    count_data=sort(table(split_data),decreasing = T)
+    
+    if (length(split_data)>1) {
+      count_data=sort(table(split_data),decreasing = T)
+    }else{
+      count_data=split_data
+    }
     write.table(count_data,sprintf('Motif_%d',count_motif),row.names = F,col.names = F,sep = ',')
 }
 }else{
-  motif_name=motiftogether1[[1]]['name']
+  motif_name=motiftogether1['name']
   protein_id_all=str_replace_all(string = motif_name,pattern = "-\\d-\\d",replacement = "")
   occur_times=str_count(motif_name,'/')[1]
   split_data=str_split(protein_id_all,'/|-')
   
-  motiftogether2[[1]]['name']=sprintf('Motif %d - Frequency of occurrence:%d',1,occur_times)
+  motiftogether2['name']=sprintf('Motif %d - Frequency of occurrence:%d',1,occur_times)
   #how many time does a gene in combinations
   count_data=sort(table(split_data),decreasing = T)
   write.table(count_data,sprintf('Motif_1'),row.names = F,col.names = F,sep = ',')
 }
 
-
-logplot<-view_motifs(motiftogether2)
-ggsave('novel_motif.png',plot=logplot,width = 50, height = length(motiftogether2)*8, units = "cm",device = 'png',limitsize = FALSE)
-
+logplot<-view_motifs(motiftogether2,text.size = 4)
+ggsave('novel_motif.png',plot=logplot,width = 1400, height = length(motiftogether2)*120, units = "px",device = 'png',limitsize = FALSE)
+logplot
 
 
 
