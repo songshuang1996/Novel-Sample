@@ -1,0 +1,14 @@
+# Python dependencies for Novel Cis-Element Discovery Pipeline
+# Install with: pip install -r requirements.txt
+
+# Web interface
+pywebio>=1.8.0
+
+# Bioinformatics
+biopython>=1.79
+
+# Data handling
+pandas>=1.3.0
+
+# Jupyter notebook import helper (allows demo.ipynb to be imported as a module)
+import-ipynb>=0.1.4

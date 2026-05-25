@@ -1,0 +1,24 @@
+name: novel-cis
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  # Python version
+  - python=3.9
+
+  # System bioinformatics tools
+  - diamond>=2.0
+  - cd-hit>=4.8
+  - meme>=5.4
+  - ncbi-datasets-cli>=15.0
+
+  # Python packages
+  - pip
+  - pip:
+    - pywebio>=1.8.0
+    - biopython>=1.79
+    - pandas>=1.3.0
+    - import-ipynb>=0.1.4
+    - jupyter
+    - notebook
